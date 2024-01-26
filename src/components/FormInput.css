@@ -1,0 +1,13 @@
+.input {
+  width: 100%;
+  display: inline-block;
+  padding: 14px 20px;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: gold;
+}
