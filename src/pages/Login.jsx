@@ -33,13 +33,7 @@ function Login() {
         </div>
         <form className="form" onSubmit={handleSubmit}>
           {loginInputs.map((input) => (
-            <FormInput
-              key={input.id}
-              placeholder={input.placeholder}
-              name={input.name}
-              type={input.type}
-              label={input.type}
-            />
+            <FormInput key={input.id} {...input} />
           ))}
           <Button type="submit">Register</Button>
         </form>
