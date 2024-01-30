@@ -21,6 +21,9 @@ const loginInputs = [
 ];
 
 function Login() {
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
   return (
     <section className="section">
       <div className="form-container">
@@ -28,7 +31,7 @@ function Login() {
           <h3>Login to Account</h3>
           <p>Welcome Back to MernAuth </p>
         </div>
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
           {loginInputs.map((input) => (
             <FormInput
               key={input.id}

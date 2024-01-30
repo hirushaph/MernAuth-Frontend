@@ -92,10 +92,6 @@ function Register() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const validationErros = {};
-    setData({ ...data, [e.target.name]: e.target.value });
-
-    console.log(validationErros);
   }
 
   return (
