@@ -1,0 +1,28 @@
+.input {
+  width: 100%;
+  display: inline-block;
+  padding: 14px 20px;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  outline: none;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: #505050;
+  margin-bottom: 8px;
+}
+
+.input:focus {
+  border-color: gold;
+}
+
+.errorMessage {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: red;
+  margin-bottom: 14px;
+}
