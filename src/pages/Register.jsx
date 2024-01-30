@@ -7,7 +7,7 @@ import {
   validateEmail,
   validatePassword,
   validateUsername,
-} from "../../utils/validation";
+} from "../utils/validation";
 
 const formInputs = [
   {
