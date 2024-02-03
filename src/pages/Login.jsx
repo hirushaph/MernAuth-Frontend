@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import "./Login.css";
+import FormInput from "../components/FormInput";
+
+const loginInputs = [
+  {
+    id: 1,
+    name: "username",
+    type: "text",
+    placeholder: "Enter Username",
+    label: "Username",
+  },
+  {
+    id: 2,
+    name: "password",
+    type: "text",
+    placeholder: "Enter Password",
+    label: "Email",
+  },
+];
 
 function Login() {
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
   return (
     <section className="section">
       <div className="form-container">
@@ -10,20 +31,10 @@ function Login() {
           <h3>Login to Account</h3>
           <p>Welcome Back to MernAuth </p>
         </div>
-        <form className="form">
-          <input
-            type="text"
-            className="input"
-            name="username"
-            placeholder="Enter username "
-          />
-
-          <input
-            type="password"
-            className="input"
-            name="password"
-            placeholder="Enter password "
-          />
+        <form className="form" onSubmit={handleSubmit}>
+          {loginInputs.map((input) => (
+            <FormInput key={input.id} {...input} />
+          ))}
           <Button type="submit">Register</Button>
         </form>
         <div>

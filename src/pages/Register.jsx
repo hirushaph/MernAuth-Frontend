@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import Button from "../components/Button";
 import { useState } from "react";
@@ -7,7 +7,8 @@ import {
   validateEmail,
   validatePassword,
   validateUsername,
-} from "../../utils/validation";
+} from "../utils/validation";
+import { useSignup } from "../hooks/useSignup";
 
 const formInputs = [
   {
@@ -55,6 +56,10 @@ function Register() {
     confirmPassword: "",
   });
 
+  const navigate = useNavigate();
+
+  const { signup, isLoading, error } = useSignup();
+
   function handleOnChange(e) {
     e.preventDefault();
     const { type, name, value } = e.target;
@@ -90,12 +95,39 @@ function Register() {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const validationErros = {};
-    setData({ ...data, [e.target.name]: e.target.value });
+    if (
+      errors.username ||
+      errors.email ||
+      errors.password ||
+      errors.confirmPassword
+    ) {
+      console.log("Error");
+      return;
+    }
 
-    console.log(validationErros);
+    if (
+      !data.username ||
+      !data.email ||
+      !data.password ||
+      !data.confirmPassword
+    ) {
+      return console.log("All Fields Are Required");
+    }
+
+    const res = await signup(
+      data.username,
+      data.email,
+      data.password,
+      data.confirmPassword
+    );
+
+    if (res && !res.error) {
+      console.log("no errors");
+    } else {
+      console.log("Error:", res.error);
+    }
   }
 
   return (
@@ -115,7 +147,10 @@ function Register() {
               errors={errors}
             />
           ))}
-          <Button type="submit">Register</Button>
+          <Button disabled={isLoading} type="submit">
+            Register
+          </Button>
+          {error && <div className="form-error">{error}</div>}
         </form>
         <p className="form-footer">
           Already have an account? <Link to="/login">Login</Link>{" "}
