@@ -9,6 +9,7 @@ import {
   validateUsername,
 } from "../utils/validation";
 import { useSignup } from "../hooks/useSignup";
+import ErrorMsg from "../components/ErrorMsg";
 
 const formInputs = [
   {
@@ -56,6 +57,8 @@ function Register() {
     confirmPassword: "",
   });
 
+  const [formError, setFormError] = useState();
+
   const navigate = useNavigate();
 
   const { signup, isLoading, error } = useSignup();
@@ -65,6 +68,7 @@ function Register() {
     const { type, name, value } = e.target;
 
     setData({ ...data, [name]: value });
+    setFormError("");
 
     switch (e.target.name) {
       case "username":
@@ -113,7 +117,7 @@ function Register() {
       !data.password ||
       !data.confirmPassword
     ) {
-      return console.log("All Fields Are Required");
+      return setFormError("All fields are required");
     }
 
     const res = await signup(
@@ -122,11 +126,11 @@ function Register() {
       data.password,
       data.confirmPassword
     );
-
-    if (res && !res.error) {
-      console.log("no errors");
+    console.log(res);
+    if (!res) {
+      navigate("/login");
     } else {
-      console.log("Error:", res.error);
+      setFormError(res);
     }
   }
 
@@ -137,7 +141,9 @@ function Register() {
           <h3>Create New Account</h3>
           <p>Welcome to MernAuth Create Account to Get Started</p>
         </div>
+
         <form className="form" onSubmit={handleSubmit}>
+          {formError && <ErrorMsg error={formError} />}
           {formInputs.map((input) => (
             <FormInput
               key={input.id}
@@ -147,10 +153,10 @@ function Register() {
               errors={errors}
             />
           ))}
+
           <Button disabled={isLoading} type="submit">
             Register
           </Button>
-          {error && <div className="form-error">{error}</div>}
         </form>
         <p className="form-footer">
           Already have an account? <Link to="/login">Login</Link>{" "}

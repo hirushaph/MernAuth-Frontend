@@ -5,8 +5,9 @@ import { Toaster } from "react-hot-toast";
 function AppLayout() {
   return (
     <div>
-      <Header />
       <Toaster position="top-center" />
+      <Header />
+
       <main className="site-main">
         <div className="container">
           <Outlet />
