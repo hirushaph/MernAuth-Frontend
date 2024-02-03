@@ -56,19 +56,16 @@ function Register() {
     password: "",
     confirmPassword: "",
   });
-
-  const [formError, setFormError] = useState();
+  const { signup, isLoading, error, setError } = useSignup();
 
   const navigate = useNavigate();
 
-  const { signup, isLoading, error } = useSignup();
-
   function handleOnChange(e) {
     e.preventDefault();
-    const { type, name, value } = e.target;
+    const { name, value } = e.target;
 
     setData({ ...data, [name]: value });
-    setFormError("");
+    setError("");
 
     switch (e.target.name) {
       case "username":
@@ -117,7 +114,7 @@ function Register() {
       !data.password ||
       !data.confirmPassword
     ) {
-      return setFormError("All fields are required");
+      return setError("All fields are required");
     }
 
     const res = await signup(
@@ -130,7 +127,7 @@ function Register() {
     if (!res) {
       navigate("/dashboard");
     } else {
-      setFormError(res);
+      setError(res);
     }
   }
 
@@ -143,7 +140,7 @@ function Register() {
         </div>
 
         <form className="form" onSubmit={handleSubmit}>
-          {formError && <ErrorMsg error={formError} />}
+          {error && <ErrorMsg error={error} />}
 
           {formInputs.map((input) => (
             <FormInput
