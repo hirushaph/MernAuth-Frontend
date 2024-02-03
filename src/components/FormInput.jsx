@@ -20,7 +20,7 @@ function FormInput({
         name={name}
         className="input"
       />
-      {errors[name] && <span className="errorMessage">{errors[name]}</span>}
+      {errors?.[name] && <span className="errorMessage">{errors[name]}</span>}
     </div>
   );
 }
