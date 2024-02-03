@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 function Header() {
   const { user } = useAuthContext();
+
   return (
     <header className="main-header">
       <div className="container">
