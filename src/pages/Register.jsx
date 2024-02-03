@@ -126,9 +126,9 @@ function Register() {
       data.password,
       data.confirmPassword
     );
-    console.log(res);
+
     if (!res) {
-      navigate("/login");
+      navigate("/dashboard");
     } else {
       setFormError(res);
     }
@@ -144,6 +144,7 @@ function Register() {
 
         <form className="form" onSubmit={handleSubmit}>
           {formError && <ErrorMsg error={formError} />}
+
           {formInputs.map((input) => (
             <FormInput
               key={input.id}
