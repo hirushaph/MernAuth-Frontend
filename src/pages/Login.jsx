@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import "./Login.css";
 import FormInput from "../components/FormInput";
+import { useLogin } from "../hooks/useLogin";
+import { useState } from "react";
+import ErrorMsg from "../components/ErrorMsg";
 
 const loginInputs = [
   {
@@ -21,8 +24,37 @@ const loginInputs = [
 ];
 
 function Login() {
-  function handleSubmit(e) {
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+  });
+  const { login, isLoading, error, setError } = useLogin();
+
+  const navigate = useNavigate();
+
+  function handleOnChange(e) {
     e.preventDefault();
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!data.username || !data.password) {
+      return setError("All fields are required");
+    }
+    /**
+     * Login user and return errors (if any)
+     * res = erros
+     */
+    const res = await login(data.username, data.password);
+
+    if (!res) {
+      console.log(error);
+      navigate("/dashboard");
+    } else {
+      setError(res);
+    }
   }
   return (
     <section className="section">
@@ -32,17 +64,26 @@ function Login() {
           <p>Welcome Back to MernAuth </p>
         </div>
         <form className="form" onSubmit={handleSubmit}>
+          {error && <ErrorMsg error={error} />}
+
           {loginInputs.map((input) => (
-            <FormInput key={input.id} {...input} />
+            <FormInput
+              {...input}
+              key={input.id}
+              value={data[input.name]}
+              onChange={handleOnChange}
+            />
           ))}
-          <Button type="submit">Register</Button>
+          <Button disabled={isLoading} type="submit">
+            Register
+          </Button>
         </form>
         <div>
           <p className="form-footer">
-            Don't have an account ? <Link to="/login">Register</Link>{" "}
+            {`Don't have an account ?`} <Link to="/login">Register</Link>
           </p>
           <p className="reset-password form-footer">
-            Forgot Password ? <Link to="/login">Reset Password</Link>{" "}
+            Forgot Password ? <Link to="/login">Reset Password</Link>
           </p>
         </div>
       </div>

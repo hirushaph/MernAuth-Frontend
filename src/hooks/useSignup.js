@@ -3,7 +3,7 @@ import { useAuthContext } from "./useAuthContext";
 import toast from "react-hot-toast";
 
 export function useSignup() {
-  const [error, setError] = useState([]);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
 
@@ -30,7 +30,7 @@ export function useSignup() {
         localStorage.setItem("user", JSON.stringify(json));
 
         // Update Authcontext
-        dispatch({ type: "account/login", payload: json });
+        dispatch({ type: "account/login", payload: json.username });
 
         setIsLoading(false);
         toast.success("Register Successfully");
@@ -39,9 +39,10 @@ export function useSignup() {
       return json.error || json.errors;
     } catch (error) {
       setIsLoading(false);
-      setError("An error occurred during signup.");
+      setError(error.message);
+      return "Internal Server Error";
     }
   }
 
-  return { signup, isLoading, error };
+  return { signup, isLoading, error, setError };
 }
