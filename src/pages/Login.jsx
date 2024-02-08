@@ -50,7 +50,6 @@ function Login() {
     const res = await login(data.username, data.password);
 
     if (!res) {
-      console.log(error);
       navigate("/dashboard");
     } else {
       setError(res);
