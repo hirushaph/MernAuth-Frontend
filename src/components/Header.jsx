@@ -1,9 +1,17 @@
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Button from "./Button";
+import { useLogout } from "../hooks/useLogout";
 
 function Header() {
   const { user } = useAuthContext();
+  // const navigate = useNavigate();
+  const { logout } = useLogout();
+
+  function handleButtonClick() {
+    logout();
+  }
 
   return (
     <header className="main-header">
@@ -11,7 +19,12 @@ function Header() {
         <h3 className="brand">MernAuth</h3>
         <nav className="nav-menu">
           <ul>
-            {user && <li>{user}</li>}
+            {user && (
+              <>
+                <li>{user}</li>
+                <Button onClick={handleButtonClick}>Logout</Button>
+              </>
+            )}
             {!user && (
               <>
                 <NavLink to="/login">Login</NavLink>

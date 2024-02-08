@@ -27,7 +27,8 @@ export function useSignup() {
 
       if (res.ok) {
         // Save user to local storage
-        localStorage.setItem("user", JSON.stringify(json));
+        localStorage.setItem("user", json.username);
+        localStorage.setItem("token", json.token);
 
         // Update Authcontext
         dispatch({ type: "account/login", payload: json.username });
