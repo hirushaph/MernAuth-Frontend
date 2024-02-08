@@ -15,6 +15,7 @@ export function useLogin() {
       const res = await fetch("http://localhost:3000/api/v1/login", {
         method: "POST",
         headers: { "Content-Type": "Application/json" },
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
 
@@ -27,7 +28,8 @@ export function useLogin() {
 
       if (res.ok) {
         // Save user to local storage
-        localStorage.setItem("user", JSON.stringify(json));
+        localStorage.setItem("user", json.username);
+        localStorage.setItem("token", json.token);
 
         // Update Authcontext
         dispatch({ type: "account/login", payload: json.username });
