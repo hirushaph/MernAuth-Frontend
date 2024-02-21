@@ -6,6 +6,7 @@ import { usePasswordReset } from "../hooks/usePasswordReset";
 import SuccessMsg from "../components/SuccessMsg";
 import { useVerifyOtp } from "../hooks/useVerifyOtp";
 import { useChangePassword } from "../hooks/useChangePassword";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ResetPassword() {
   const [session, setSession] = useState("request-otp");
@@ -90,8 +91,14 @@ function ResetPassword() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <Button disabled={passwordResetIsLoading} type="submit">
-                Send OTP
+              <Button disabled={isLoading} type="submit">
+                {isLoading ? (
+                  <>
+                    <FontAwesomeIcon icon="circle-notch" spin /> Sending OTP
+                  </>
+                ) : (
+                  "Send OTP"
+                )}
               </Button>
             </form>
           </div>
@@ -113,7 +120,13 @@ function ResetPassword() {
                 maxLength={6}
               />
               <Button disabled={isLoading} type="submit">
-                Verify OTP
+                {isLoading ? (
+                  <>
+                    <FontAwesomeIcon icon="circle-notch" spin /> Verifying
+                  </>
+                ) : (
+                  "Verify OTP"
+                )}
               </Button>
               <Button disabled={isLoading} type="button">
                 Back
@@ -145,8 +158,15 @@ function ResetPassword() {
                 value={password.confirmPassword}
                 onChange={handlePasswordOnChange}
               />
-              <Button disabled={changePasswordIsLoading} type="submit">
-                Change Password
+              <Button disabled={isLoading} type="submit">
+                {isLoading ? (
+                  <>
+                    <FontAwesomeIcon icon="circle-notch" spin /> Changing
+                    Password
+                  </>
+                ) : (
+                  "Change Password"
+                )}
               </Button>
             </form>
           </div>
