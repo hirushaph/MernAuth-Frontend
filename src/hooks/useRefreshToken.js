@@ -8,7 +8,11 @@ function useRefreshToken() {
 
     const { token } = response.data;
 
-    localStorage.setItem("token", token);
+    // Get localstorage user object
+    const user = JSON.parse(localStorage.getItem("user"));
+    user.token = token;
+
+    localStorage.setItem("user", JSON.stringify(user));
     return token;
   }
 

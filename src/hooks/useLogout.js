@@ -7,13 +7,11 @@ export function useLogout() {
 
   async function logout() {
     try {
+      // Remove http-only refresh token
+      await axiosPrivate.post("/logout");
+
       // Remove user from localstorage
       localStorage.removeItem("user");
-      localStorage.removeItem("token");
-
-      // Remove http cookie
-      const res = await axiosPrivate.post("/logout");
-      console.log(res);
 
       // Dispatch logout action
       dispatch({ type: "account/logout" });
