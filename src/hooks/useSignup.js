@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import toast from "react-hot-toast";
+import { axiosPrivate } from "../services/axios";
 
 export function useSignup() {
   const [error, setError] = useState(null);
@@ -12,36 +13,31 @@ export function useSignup() {
       setIsLoading(true);
       setError(null);
 
-      const res = await fetch("http://localhost:3000/api/v1/register", {
-        method: "POST",
-        headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify({ username, email, password, confirmPassword }),
+      const res = await axiosPrivate.post("/register", {
+        username,
+        email,
+        password,
+        confirmPassword,
       });
 
-      const json = await res.json();
+      const resData = res.data;
+      // Save user to local storage
+      const data = JSON.stringify({
+        username: resData.username,
+        token: resData.token,
+      });
+      localStorage.setItem("user", data);
 
-      if (!res.ok) {
-        setIsLoading(false);
-        setError(json.error || json.errors);
-      }
+      // Update Authcontext
+      dispatch({ type: "account/login", payload: resData.username });
 
-      if (res.ok) {
-        // Save user to local storage
-        localStorage.setItem("user", json.username);
-        localStorage.setItem("token", json.token);
-
-        // Update Authcontext
-        dispatch({ type: "account/login", payload: json.username });
-
-        setIsLoading(false);
-        toast.success("Register Successfully");
-      }
-
-      return json.error || json.errors;
+      setIsLoading(false);
+      toast.success("Register Successfully");
     } catch (error) {
       setIsLoading(false);
-      setError(error.message);
-      return "Internal Server Error";
+      const errorMessages = error?.response?.data?.errors;
+      setError(errorMessages);
+      return errorMessages || "Internal Server Error";
     }
   }
 

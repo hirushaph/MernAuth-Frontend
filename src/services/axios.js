@@ -21,7 +21,9 @@ const axiosPrivate = axios.create({
 // Add a request interceptor
 axiosPrivate.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (!user) return config;
+    const { token } = JSON.parse(user);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -35,23 +37,24 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    console.log(error.response);
     const refresh = useRefreshToken();
 
-    // If the error status is 401 and there is no originalRequest._retry flag,
+    // If the error status is 403 and there is no originalRequest._retry flag,
     // it means the token has expired and we need to refresh it
     if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
         await refresh();
-        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+        if (!user) return;
+        const { token } = JSON.parse(user);
 
         // Retry the original request with the new token
         originalRequest.headers.Authorization = `Bearer ${token}`;
         return axios(originalRequest);
       } catch (error) {
-        // Handle refresh token error or redirect to login
+        // Handle errors
         return Promise.reject(error);
       }
     }
