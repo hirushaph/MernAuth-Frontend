@@ -8,6 +8,7 @@ function FormInput({
   name,
   errors,
   label,
+  maxLength,
 }) {
   return (
     <div>
@@ -19,6 +20,7 @@ function FormInput({
         onChange={onChange}
         name={name}
         className="input"
+        maxLength={maxLength}
       />
       {errors?.[name] && <span className="errorMessage">{errors[name]}</span>}
     </div>
