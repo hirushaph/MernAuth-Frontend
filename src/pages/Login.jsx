@@ -6,6 +6,7 @@ import { useLogin } from "../hooks/useLogin";
 import { useState } from "react";
 import ErrorMsg from "../components/ErrorMsg";
 import SuccessMsg from "../components/SuccessMsg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const loginInputs = [
   {
@@ -18,9 +19,9 @@ const loginInputs = [
   {
     id: 2,
     name: "password",
-    type: "text",
+    type: "password",
     placeholder: "Enter Password",
-    label: "Email",
+    label: "Password",
   },
 ];
 
@@ -70,7 +71,6 @@ function Login() {
         <form className="form" onSubmit={handleSubmit}>
           {error && <ErrorMsg error={error} />}
           {successMsg && <SuccessMsg msg={successMsg} />}
-
           {loginInputs.map((input) => (
             <FormInput
               {...input}
@@ -80,7 +80,7 @@ function Login() {
             />
           ))}
           <Button disabled={isLoading} type="submit">
-            Login
+            {isLoading ? <FontAwesomeIcon icon="circle-notch" spin /> : "Login"}
           </Button>
         </form>
         <div>

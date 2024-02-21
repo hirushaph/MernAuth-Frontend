@@ -12,6 +12,13 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ResetPassword from "./pages/ResetPassword";
 
+// Import FontAwesome icons
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+
+// Setup fontawesome globel icons
+library.add(faCircleNotch);
+
 function App() {
   const { user } = useAuthContext();
 
