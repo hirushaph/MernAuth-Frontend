@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import { useAuthContext } from "./hooks/useAuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const { user } = useAuthContext();
@@ -34,6 +35,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/resetpassword" element={<ResetPassword />} />
         </Route>
       </Routes>
     </Router>
