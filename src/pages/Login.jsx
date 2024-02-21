@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import "./Login.css";
 import FormInput from "../components/FormInput";
 import { useLogin } from "../hooks/useLogin";
 import { useState } from "react";
 import ErrorMsg from "../components/ErrorMsg";
+import SuccessMsg from "../components/SuccessMsg";
 
 const loginInputs = [
   {
@@ -31,6 +32,10 @@ function Login() {
   const { login, isLoading, error, setError } = useLogin();
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const successMsg = location?.state?.message;
 
   function handleOnChange(e) {
     e.preventDefault();
@@ -64,6 +69,7 @@ function Login() {
         </div>
         <form className="form" onSubmit={handleSubmit}>
           {error && <ErrorMsg error={error} />}
+          {successMsg && <SuccessMsg msg={successMsg} />}
 
           {loginInputs.map((input) => (
             <FormInput
@@ -74,15 +80,15 @@ function Login() {
             />
           ))}
           <Button disabled={isLoading} type="submit">
-            Register
+            Login
           </Button>
         </form>
         <div>
           <p className="form-footer">
-            {`Don't have an account ?`} <Link to="/login">Register</Link>
+            {`Don't have an account ?`} <Link to="/register">Register</Link>
           </p>
           <p className="reset-password form-footer">
-            Forgot Password ? <Link to="/login">Reset Password</Link>
+            Forgot Password ? <Link to="/resetpassword">Reset Password</Link>
           </p>
         </div>
       </div>
