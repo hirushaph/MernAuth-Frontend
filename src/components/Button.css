@@ -4,9 +4,14 @@
   border: 1px solid var(--dark-white);
   border-radius: 4px;
   font-size: 15px;
-  margin-bottom: 10px;
 }
 
 .btn:hover {
   cursor: pointer;
+}
+
+.logout {
+  background-color: #d63031;
+  padding: 8px !important;
+  color: white;
 }
