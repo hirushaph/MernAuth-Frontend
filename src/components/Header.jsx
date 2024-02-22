@@ -22,7 +22,9 @@ function Header() {
             {user && (
               <>
                 <li>{user}</li>
-                <Button onClick={handleButtonClick}>Logout</Button>
+                <Button btnType="logout" onClick={handleButtonClick}>
+                  Logout
+                </Button>
               </>
             )}
             {!user && (

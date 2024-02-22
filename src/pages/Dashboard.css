@@ -1,0 +1,11 @@
+.profile-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 40px 0px;
+}
+
+.profile-section .column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
