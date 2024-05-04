@@ -49,6 +49,12 @@ function UpdateUser({ userData, setUserData }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (
+      data.username === userData.username &&
+      data.email === userData.email &&
+      data.password === ""
+    )
+      return;
 
     try {
       setIsLoading(true);
