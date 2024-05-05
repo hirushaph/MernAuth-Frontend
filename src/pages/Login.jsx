@@ -1,34 +1,34 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import "./Login.css";
-import FormInput from "../components/FormInput";
-import { useLogin } from "../hooks/useLogin";
-import { useState } from "react";
-import ErrorMsg from "../components/ErrorMsg";
-import SuccessMsg from "../components/SuccessMsg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Button from '../components/Button';
+import './Login.css';
+import FormInput from '../components/FormInput';
+import { useLogin } from '../hooks/useLogin';
+import { useState } from 'react';
+import ErrorMsg from '../components/ErrorMsg';
+import SuccessMsg from '../components/SuccessMsg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const loginInputs = [
   {
     id: 1,
-    name: "username",
-    type: "text",
-    placeholder: "Enter Username",
-    label: "Username",
+    name: 'username',
+    type: 'text',
+    placeholder: 'Enter Username',
+    label: 'Username',
   },
   {
     id: 2,
-    name: "password",
-    type: "password",
-    placeholder: "Enter Password",
-    label: "Password",
+    name: 'password',
+    type: 'password',
+    placeholder: 'Enter Password',
+    label: 'Password',
   },
 ];
 
 function Login() {
   const [data, setData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
   const { login, isLoading, error, setError } = useLogin();
 
@@ -47,7 +47,7 @@ function Login() {
     e.preventDefault();
 
     if (!data.username || !data.password) {
-      return setError("All fields are required");
+      return setError('All fields are required');
     }
     /**
      * Login user and return errors (if any)
@@ -56,19 +56,19 @@ function Login() {
     const res = await login(data.username, data.password);
 
     if (!res) {
-      navigate("/dashboard");
+      navigate('/dashboard');
     } else {
       setError(res);
     }
   }
   return (
-    <section className="section">
-      <div className="form-container">
-        <div className="text-container">
+    <section className='section'>
+      <div className='form-container'>
+        <div className='text-container'>
           <h3>Login to Account</h3>
           <p>Welcome Back to MernAuth </p>
         </div>
-        <form className="form" onSubmit={handleSubmit}>
+        <form className='form' onSubmit={handleSubmit}>
           {error && <ErrorMsg error={error} />}
           {successMsg && <SuccessMsg msg={successMsg} />}
           {loginInputs.map((input) => (
@@ -79,16 +79,16 @@ function Login() {
               onChange={handleOnChange}
             />
           ))}
-          <Button disabled={isLoading} type="submit">
-            {isLoading ? <FontAwesomeIcon icon="circle-notch" spin /> : "Login"}
+          <Button disabled={isLoading} color='primary' type='submit'>
+            {isLoading ? <FontAwesomeIcon icon='circle-notch' spin /> : 'Login'}
           </Button>
         </form>
-        <div>
-          <p className="form-footer">
-            {`Don't have an account ?`} <Link to="/register">Register</Link>
+        <div className='form-footer-container'>
+          <p className='form-footer register-account'>
+            {`Don't have an account ?`} <Link to='/register'>Register</Link>
           </p>
-          <p className="reset-password form-footer">
-            Forgot Password ? <Link to="/resetpassword">Reset Password</Link>
+          <p className='reset-password form-footer'>
+            Forgot Password ? <Link to='/resetpassword'>Reset Password</Link>
           </p>
         </div>
       </div>

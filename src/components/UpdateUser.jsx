@@ -1,43 +1,43 @@
-import { useState } from "react";
-import FormInput from "./FormInput";
-import Button from "./Button";
-import { axiosPrivate } from "../services/axios";
-import validator from "validator";
-import ErrorMsg from "./ErrorMsg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import toast from "react-hot-toast";
-import { useLogout } from "../hooks/useLogout";
+import { useState } from 'react';
+import FormInput from './FormInput';
+import Button from './Button';
+import { axiosPrivate } from '../services/axios';
+import validator from 'validator';
+import ErrorMsg from './ErrorMsg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import toast from 'react-hot-toast';
+import { useLogout } from '../hooks/useLogout';
 
 function UpdateUser({ userData, setUserData }) {
   const { logout } = useLogout();
   const [data, setData] = useState({
     username: userData.username,
     email: userData.email,
-    password: "",
+    password: '',
   });
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const formInputs = [
     {
       id: 1,
-      name: "username",
-      type: "text",
-      placeholder: "Enter Username",
-      label: "Username",
+      name: 'username',
+      type: 'text',
+      placeholder: 'Enter Username',
+      label: 'Username',
     },
     {
       id: 2,
-      name: "email",
-      type: "text",
-      placeholder: "Enter Email",
-      label: "Email",
+      name: 'email',
+      type: 'text',
+      placeholder: 'Enter Email',
+      label: 'Email',
     },
     {
       id: 3,
-      name: "password",
-      type: "text",
-      placeholder: "Enter New Password",
-      label: "Password",
+      name: 'password',
+      type: 'text',
+      placeholder: 'Enter New Password',
+      label: 'Password',
     },
   ];
 
@@ -49,16 +49,17 @@ function UpdateUser({ userData, setUserData }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     if (
       data.username === userData.username &&
       data.email === userData.email &&
-      data.password === ""
+      data.password === ''
     )
       return;
 
     try {
       setIsLoading(true);
-      const userinfo = {};
+      let userinfo = {};
       let isUserChanged = false;
 
       if (data.username !== userData.username) {
@@ -67,32 +68,33 @@ function UpdateUser({ userData, setUserData }) {
       }
 
       if (data.email !== userData.email) userinfo.email = data.email;
-      if (data.password && validator.isStrongPassword(data.password))
+
+      if (data.password && validator.isStrongPassword(data.password)) {
         userinfo.password = data.password;
+      } else {
+        throw new Error('Password is not strong');
+      }
 
-      if (data.password && !validator.isStrongPassword(data.password))
-        throw new Error("Password is not strong");
-
-      await axiosPrivate.put("/updateuser", userinfo);
+      await axiosPrivate.put('/updateuser', JSON.stringify(userinfo));
       setUserData({ ...userData, ...data });
       setIsLoading(false);
-      toast.success("User Updated Successfully");
+      toast.success('User Updated Successfully');
 
       if (isUserChanged) logout();
-      setData({ ...data, password: "" });
+      setData({ ...data, password: '' });
+      setError(null);
     } catch (error) {
-      setError(error);
+      setError(error.message);
       setIsLoading(false);
-      console.log(error);
     }
   }
 
   return (
-    <div className="update-user">
-      <div className="update-user-heading">
+    <div className='update-user'>
+      <div className='update-user-heading'>
         <h4>Update User Info</h4>
       </div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className='form' onSubmit={handleSubmit}>
         {error && <ErrorMsg error={error} />}
         {formInputs.map((input) => (
           <FormInput
@@ -108,10 +110,10 @@ function UpdateUser({ userData, setUserData }) {
         <Button disabled={isLoading}>
           {isLoading ? (
             <>
-              <FontAwesomeIcon icon="circle-notch" /> Updating
+              <FontAwesomeIcon icon='circle-notch' /> Updating
             </>
           ) : (
-            "Update User"
+            'Update User'
           )}
         </Button>
       </form>
