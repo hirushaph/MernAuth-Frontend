@@ -1,3 +1,13 @@
 .form-footer {
   margin-bottom: 10px;
 }
+
+.form-footer-container,
+.form-footer-register {
+  margin-top: 20px;
+}
+
+/* .form-footer.register-account a {
+  text-decoration: none;
+  color: #ff8f8f;
+} */

@@ -16,7 +16,7 @@ label {
 }
 
 .input:focus {
-  border-color: gold;
+  border-color: #508d69;
 }
 
 .errorMessage {

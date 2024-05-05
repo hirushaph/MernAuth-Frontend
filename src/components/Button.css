@@ -10,8 +10,32 @@
   cursor: pointer;
 }
 
-.logout {
+.headerBtn {
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 8px 26px;
+  transition: 0.3s ease-in-out;
+  border: none;
+}
+
+.headerBtn.primary:hover {
+  box-shadow: 0 3px 10px 1px rgba(50, 205, 50, 0.4);
+}
+
+.headerBtn.secondary:hover {
+  box-shadow: 0 3px 10px 1px rgba(255, 143, 143, 0.4);
+}
+
+.secondary {
+  background-color: #ff8f8f;
+  color: white;
+}
+.primary {
+  color: white;
+  background-color: #41b06e;
+}
+
+.danger {
   background-color: #d63031;
-  padding: 8px !important;
   color: white;
 }
