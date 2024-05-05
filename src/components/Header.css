@@ -1,11 +1,13 @@
 .main-header {
   background: var(--dark-white);
+  position: relative;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1) !important;
 }
 .main-header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
+  height: 80px;
 }
 
 .nav-menu ul {
@@ -13,4 +15,13 @@
   list-style: none;
   align-items: center;
   gap: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  gap: 4px;
+}
+
+.headerBtnIcon {
+  margin-right: 8px;
 }

@@ -1,19 +1,19 @@
-import axios from "axios";
-import useRefreshToken from "../hooks/useRefreshToken";
+import axios from 'axios';
+import useRefreshToken from '../hooks/useRefreshToken';
 
-const BASE_URL = "http://localhost:3000/api/v1";
+const BASE_URL = 'http://localhost:3000/api/v1';
 
 export default axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
 const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
   withCredentials: true,
 });
@@ -21,7 +21,7 @@ const axiosPrivate = axios.create({
 // Add a request interceptor
 axiosPrivate.interceptors.request.use(
   (config) => {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem('user');
     if (!user) return config;
     const { token } = JSON.parse(user);
     if (token) {
@@ -46,7 +46,7 @@ axiosPrivate.interceptors.response.use(
 
       try {
         await refresh();
-        const user = localStorage.getItem("user");
+        const user = localStorage.getItem('user');
         if (!user) return;
         const { token } = JSON.parse(user);
 

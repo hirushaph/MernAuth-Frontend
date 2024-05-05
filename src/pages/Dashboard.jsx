@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { axiosPrivate } from "../services/axios";
-import { useLogout } from "../hooks/useLogout";
-import toast from "react-hot-toast";
-import "./Dashboard.css";
-import Spinner from "../components/Spinner";
-import UserInfo from "../components/UserInfo";
-import UpdateUser from "../components/UpdateUser";
+import { useEffect, useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { axiosPrivate } from '../services/axios';
+import { useLogout } from '../hooks/useLogout';
+import toast from 'react-hot-toast';
+import './Dashboard.css';
+import Spinner from '../components/Spinner';
+import UserInfo from '../components/UserInfo';
+import UpdateUser from '../components/UpdateUser';
 
 function Dashboard() {
   const { logout } = useLogout();
@@ -14,19 +14,24 @@ function Dashboard() {
   const [userData, setUserData] = useState();
   const [isloading, setIsLoading] = useState(true);
 
+  async function handleLogout() {
+    logout();
+  }
+
   useEffect(() => {
     async function getUser() {
       try {
         setIsLoading(true);
         const res = await axiosPrivate.get(`/user/${user}`);
-        console.log("fetched");
+
+        console.log('fetched');
         setUserData((data) => ({ ...data, ...res.data }));
 
         setIsLoading(false);
       } catch (error) {
         toast.error(error.response.data.message);
         console.log(error);
-        logout();
+        handleLogout();
       }
     }
 
@@ -34,11 +39,11 @@ function Dashboard() {
   }, [user, logout]);
 
   return (
-    <section className="profile-section">
-      <div className="column">
+    <section className='profile-section'>
+      <div className='column'>
         {isloading ? <Spinner /> : <UserInfo userData={userData} />}
       </div>
-      <div className="column">
+      <div className='column'>
         {isloading ? (
           <Spinner />
         ) : (
