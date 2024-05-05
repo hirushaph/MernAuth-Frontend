@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
-import toast from "react-hot-toast";
-import { axiosPrivate } from "../services/axios";
+import { useState } from 'react';
+import { useAuthContext } from './useAuthContext';
+import toast from 'react-hot-toast';
+import { axiosPrivate } from '../services/axios';
 
 export function useLogin() {
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ export function useLogin() {
       setIsLoading(true);
       setError(null);
 
-      const res = await axiosPrivate.post("/login", { username, password });
+      const res = await axiosPrivate.post('/login', { username, password });
 
       const resData = res.data;
 
@@ -22,19 +22,19 @@ export function useLogin() {
         username: resData.username,
         token: resData.token,
       });
-      localStorage.setItem("user", data);
+      localStorage.setItem('user', data);
 
       // Update Authcontext
-      dispatch({ type: "account/login", payload: resData.username });
+      dispatch({ type: 'account/login', payload: resData.username });
 
       setIsLoading(false);
-      toast.success("Login Successfully");
+      toast.success('Login Successfully');
     } catch (error) {
       setIsLoading(false);
       const errorMessages = error?.response?.data?.error;
       setError(errorMessages);
 
-      return errorMessages || "Internal Server Error";
+      return errorMessages || 'Internal Server Error';
     }
   }
 

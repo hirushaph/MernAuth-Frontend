@@ -1,8 +1,8 @@
-import "./ErrorMsg.css";
+import './ErrorMsg.css';
 
 function ErrorMsg({ error }) {
   return (
-    <div className="form-error">
+    <div className='form-error'>
       {!Array.isArray(error) && <p>{error}</p>}
 
       {Array.isArray(error) &&
